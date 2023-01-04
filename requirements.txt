@@ -38,5 +38,6 @@ stack-data==0.6.2
 traitlets==5.8.0
 tzdata==2022.7
 uritemplate==4.1.1
+uuid==1.30
 wcwidth==0.2.5
 whitenoise==6.2.0
