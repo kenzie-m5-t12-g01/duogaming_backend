@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
             "password",
             "username",
             "country",
-            "is_activate",
+            "is_active",
             "is_superuser",
             "created_at",
             "updated_at",
