@@ -20,5 +20,11 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+    def patch(self, request, *args, **kwargs):
+        if request.data["is_active"]:
+            request.data.pop("is_active")
+
+        return self.partial_update(request, *args, **kwargs)
+
     def delete(self, request, *args, **kwargs):
         return self.soft_delete(request, *args, **kwargs)
