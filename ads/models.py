@@ -16,7 +16,7 @@ class Ad(models.Model):
         primary_key=True, 
         editable=True,
     )
-    nickname = models.CharField(max_length=240)
+    nickname = models.CharField(max_length=240, unique=True)
     years_playing = models.IntegerField()
     discord_user = models.CharField(max_length=240)
     day_period = models.CharField(
@@ -24,7 +24,7 @@ class Ad(models.Model):
         choices=DayPeriodChoice.choices,
         default=DayPeriodChoice.DEFAULT,
     )
-
+    
     week_days = models.ManyToManyField(
         "week_days.WeekDay", 
         related_name="ads",
@@ -35,7 +35,11 @@ class Ad(models.Model):
         on_delete=models.CASCADE,
         related_name="ads",
     )
-    # game = models.ForeignKey()
+    game = models.ForeignKey(
+        "games.Game",
+        on_delete=models.CASCADE,
+        related_name="ads"
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at =models.DateTimeField(auto_now=True)
