@@ -1,6 +1,6 @@
 import uuid
 from django.db import models
-# from genres.models import Genre
+from genres.models import Genre
 
 
 class Game(models.Model):
@@ -11,4 +11,4 @@ class Game(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    # genres = models.ManyToManyField(Genre, through="GameGenres", related_name="genres")
+    genres = models.ManyToManyField("genres.Genre", related_name="genres")
