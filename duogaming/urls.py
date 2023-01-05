@@ -7,4 +7,5 @@ urlpatterns = [
     path("api/", include("week_days.urls")),
     path("api/", include("ads.urls")),
     path("api/", include("games.urls")),
+    path("api/", include("games_suggestions.urls")),
 ]
