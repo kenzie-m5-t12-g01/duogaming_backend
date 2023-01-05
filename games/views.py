@@ -1,32 +1,23 @@
-from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
-from .models import Game
-from .serializers import GameSerializer
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from games.models import Game
+from games.serializers import GameSerializer
+from games.permissions import IsAdminOrReadOnly
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAdminUser
 from rest_framework.pagination import PageNumberPagination
 
 
-class CreateGameView(CreateAPIView):
+class GameView(ListCreateAPIView, PageNumberPagination):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminOrReadOnly]
 
     queryset = Game.objects.all()
     serializer_class = GameSerializer
 
 
-class ListGameView(ListAPIView, PageNumberPagination):
-    queryset = Game.objects.all()
-    serializer_class = GameSerializer
-
-
-class RetrieveGameView(RetrieveAPIView):
-    queryset = Game.objects.all()
-    serializer_class = GameSerializer
-
-
-class GameDetailView(UpdateAPIView, DestroyAPIView):
+class GameDetailView(RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminOrReadOnly]
     
     queryset = Game.objects.all()
     serializer_class = GameSerializer
