@@ -1,3 +1,8 @@
 from django.db import models
 
-# Create your models here.
+class WeekDay(models.Model):
+    class Meta:
+        ordering = ["id",]
+
+    day = models.CharField(max_length=60, unique=True)
+
