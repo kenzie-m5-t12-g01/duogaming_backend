@@ -2,11 +2,11 @@ from rest_framework import serializers
 from ads.models import Ad
 from week_days.serializers import WeekDaySerializer
 from week_days.models import WeekDay
-from django.shortcuts import get_object_or_404
 import ipdb
 
 class AdSerializer(serializers.ModelSerializer):
 
+    week_days = WeekDaySerializer(many=True)
     # game_title = serializers.SerializerMethodField()
 
     class Meta:
@@ -30,12 +30,15 @@ class AdSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data: dict) -> Ad:
         week_days = validated_data.pop("week_days")
+        ipdb.set_trace()
 
         ad = Ad.objects.create(**validated_data)
 
         for item in week_days:    
-            day_obj = WeekDay.objects.get(day=item.day)
+            day_obj = WeekDay.objects.get(**item)
             ad.week_days.add(day_obj)
+
+        ad.save()
 
         return ad
             
