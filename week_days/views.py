@@ -3,10 +3,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from week_days.serializers import WeekDaySerializer
 from week_days.models import WeekDay    
 from week_days.permissions import IsSuperUserOrListOnly
-from rest_framework.pagination import PageNumberPagination
-
-class WeekDayPagination(PageNumberPagination):
-    page_size = 7
+from week_days.pagination import WeekDayPagination
 
 class WeekDayView(generics.ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
