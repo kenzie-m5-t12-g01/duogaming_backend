@@ -4,6 +4,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from week_days.serializers import WeekDaySerializer
 from week_days.models import WeekDay    
 from week_days.permissions import IsSuperUserOrListOnly
+from ads.serializers import AdSerializer
 
 
 class WeekDayView(generics.ListCreateAPIView):
@@ -15,7 +16,7 @@ class WeekDayView(generics.ListCreateAPIView):
 
 class WeekDayDetailView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated, IsSuperUserOrListOnly]
+    permission_classes = [IsSuperUserOrListOnly]
     serializer_class = WeekDaySerializer
     queryset = WeekDay.objects.all()
     lookup_url_kwarg = "id"

@@ -8,14 +8,12 @@ from week_days.permissions import IsSuperUserOrListOnly
 
 class AdsView(generics.ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [
-        IsSuperUserOrListOnly, 
-    ]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     serializer_class = AdSerializer
     queryset = Ad.objects.all()
 
-    def perform_create(self, serializer):
-        return serializer.save(user=self.request.user)
+    # def perform_create(self, serializer):
+    #     return serializer.save(user=self.request.user)
     
 
 # class AdsDetailView(generics.RetrieveUpdateDestroyAPIView):
