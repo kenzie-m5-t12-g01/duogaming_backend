@@ -2,17 +2,17 @@ from rest_framework import generics
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from ads.serializers import AdSerializer
 from ads.models import Ad
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from week_days.permissions import IsSuperUserOrListOnly
+from rest_framework.permissions import IsAuthenticated
+from ads.permissions import IsOwnerOrSuperUser
 from django.shortcuts import get_object_or_404
 from games.models import Game
 
 
-class AdsView(generics.ListCreateAPIView):
+
+class AdsView(generics.CreateAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
     serializer_class = AdSerializer
-    queryset = Ad.objects.all()
 
     def perform_create(self, serializer):
         game_id = self.kwargs["pk"]
@@ -23,9 +23,17 @@ class AdsView(generics.ListCreateAPIView):
             game=game_obj,
         )
 
+class AdsListView(generics.ListAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    serializer_class = AdSerializer
+    queryset = Ad.objects.all()
+
+
+
 class AdsDetailView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
-    
-
-    serializer_class = [AdSerializer]
+    permission_classes = [IsAuthenticated, IsOwnerOrSuperUser]
+    serializer_class = AdSerializer
     queryset = Ad.objects.all()
+        
