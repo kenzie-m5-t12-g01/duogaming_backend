@@ -1,10 +1,11 @@
 from rest_framework import serializers
 from ads.models import Ad
-from week_days.serializers import WeekDaySerializer
-from week_days.models import WeekDay
+from week_days.models import WeekDay, WeekDayChoices
 
 class WeekDaySerializerSerializer(serializers.Serializer):
-    day = serializers.CharField()
+    day = serializers.ChoiceField(
+        choices=WeekDayChoices.choices,
+    )
 
 class AdSerializer(serializers.ModelSerializer):
     week_days = WeekDaySerializerSerializer(many=True)
@@ -34,12 +35,14 @@ class AdSerializer(serializers.ModelSerializer):
     def create(self, validated_data: dict) -> Ad:
         week_days = validated_data.pop("week_days")
 
-        ad = Ad.objects.create(**validated_data)
-
+        week_days_valid = []
         for item in week_days:    
-            day_obj = WeekDay.objects.get(**item)
-            ad.week_days.add(day_obj)
+            day_obj, _ = WeekDay.objects.get_or_create(**item)
+            week_days_valid.append(day_obj)
 
-        ad.save()
+        ad = Ad.objects.create(**validated_data)
+        ad.week_days.set(week_days_valid)
+
         return ad
+        
             
