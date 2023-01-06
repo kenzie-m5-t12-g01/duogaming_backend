@@ -23,13 +23,13 @@ class GameSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data: dict):
         genres = validated_data.pop("genres")
-        game_obj = Game.objects.create(**validated_data)
         genres_list = []
 
         for genre_dict in genres:
             genre_obj, created = Genre.objects.get_or_create(**genre_dict)
             genres_list.append(genre_obj)
 
+        game_obj = Game.objects.create(**validated_data)
         game_obj.genres.set(genres_list)
 
         return game_obj
