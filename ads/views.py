@@ -29,18 +29,25 @@ class AdsGameView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         game_id = self.kwargs["pk"]
         user_id = self.request.user.id
+        nickname = self.request.data["nickname"]
 
         game_obj = get_object_or_404(Game, id=game_id)
+
         ad_already_exists = Ad.objects.filter(game_id=game_id, user_id=user_id)
+        nickname_already_exists = Ad.objects.filter(game_id=game_id, nickname=nickname)
 
         if ad_already_exists:
             raise serializers.ValidationError("You already have an ad for this game.")
 
-        else:
-            return serializer.save(
-                user=self.request.user,
-                game=game_obj,
+        elif nickname_already_exists:
+            raise serializers.ValidationError(
+                "There ia already an ad with the same nickname for this game."
             )
+
+        return serializer.save(
+            user=self.request.user,
+            game=game_obj,
+        )
 
 
 class AdsUserView(generics.ListAPIView):
