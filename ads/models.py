@@ -16,7 +16,7 @@ class Ad(models.Model):
         primary_key=True, 
         editable=True,
     )
-    nickname = models.CharField(max_length=240, unique=True)
+    nickname = models.CharField(max_length=240)
     years_playing = models.IntegerField()
     discord_user = models.CharField(max_length=240)
     day_period = models.CharField(

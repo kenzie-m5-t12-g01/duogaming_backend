@@ -4,6 +4,7 @@ from users.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = User
         fields = [
@@ -14,12 +15,14 @@ class UserSerializer(serializers.ModelSerializer):
             "country",
             "is_active",
             "is_superuser",
+            "ads",
             "created_at",
             "updated_at",
         ]
         read_only_fields = [
             "id",
             "is_superuser",
+            "ads",
             "created_at",
             "updated_at",
         ]
