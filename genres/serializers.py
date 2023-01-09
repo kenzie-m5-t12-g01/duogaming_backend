@@ -8,5 +8,5 @@ class GenreSerializer(serializers.ModelSerializer):
         fields = ["id", "name"]
         read_only_fields = ["id"]
 
-    def create(self, validated_data)->Genre:
+    def create(self, validated_data) -> Genre:
         return Genre.objects.create(**validated_data)

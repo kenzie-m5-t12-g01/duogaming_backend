@@ -17,8 +17,9 @@ class GameSerializer(serializers.ModelSerializer):
             "release_date",
             "created_at",
             "updated_at",
-            "genres"
+            "genres",
         ]
+
     genres = GenreSerializerSerializer(many=True)
 
     def create(self, validated_data: dict):
@@ -38,7 +39,8 @@ class GameSerializer(serializers.ModelSerializer):
         instance.title = validated_data.get("title", instance.title)
         instance.image = validated_data.get("image", instance.image)
         instance.release_date = validated_data.get(
-            "release_date", instance.release_date)
+            "release_date", instance.release_date
+        )
 
         instance.save()
 

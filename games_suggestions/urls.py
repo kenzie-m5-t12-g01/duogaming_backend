@@ -1,5 +1,4 @@
 from django.urls import path
-
 from games_suggestions.views import GameSuggestionView, GameSuggestionDetailView
 
 

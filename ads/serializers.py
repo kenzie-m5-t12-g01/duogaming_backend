@@ -2,10 +2,12 @@ from rest_framework import serializers
 from ads.models import Ad
 from week_days.models import WeekDay, WeekDayChoices
 
+
 class WeekDaySerializerSerializer(serializers.Serializer):
     day = serializers.ChoiceField(
         choices=WeekDayChoices.choices,
     )
+
 
 class AdSerializer(serializers.ModelSerializer):
     week_days = WeekDaySerializerSerializer(many=True)
@@ -25,10 +27,10 @@ class AdSerializer(serializers.ModelSerializer):
             "updated_at",
         ]
         read_only_fields = [
-            "id", 
-            "created_at", 
-            "updated_at", 
-            "user_id", 
+            "id",
+            "created_at",
+            "updated_at",
+            "user_id",
             "game_id",
         ]
 
@@ -36,7 +38,7 @@ class AdSerializer(serializers.ModelSerializer):
         week_days = validated_data.pop("week_days")
 
         week_days_valid = []
-        for day in week_days:    
+        for day in week_days:
             day_obj, _ = WeekDay.objects.get_or_create(**day)
             week_days_valid.append(day_obj)
 
@@ -44,7 +46,7 @@ class AdSerializer(serializers.ModelSerializer):
         ad.week_days.set(week_days_valid)
 
         return ad
-        
+
     def update(self, instance: Ad, validated_data: dict):
         week_days = validated_data.pop("week_days", None)
         week_days_list = []
@@ -53,7 +55,7 @@ class AdSerializer(serializers.ModelSerializer):
             for day in week_days:
                 day_obj, _ = WeekDay.objects.get_or_create(**day)
                 week_days_list.append(day_obj)
-                
+
             instance.week_days.set(week_days_list)
 
         for key, value in validated_data.items():
@@ -62,7 +64,3 @@ class AdSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
-
-
-
-            
