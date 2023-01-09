@@ -19,7 +19,7 @@ class AdsGameView(generics.ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     serializer_class = AdSerializer
-    
+
     def get_queryset(self):
         game_id = self.kwargs["pk"]
         get_object_or_404(Game, id=game_id)
@@ -50,21 +50,17 @@ class AdsGameView(generics.ListCreateAPIView):
             user=self.request.user,
             game=game_obj,
         )
-    
+
     @extend_schema(
-        tags=["Ads"],
-        summary= "list game ads",
-        description="Route to list game ads"
+        tags=["Ads"], summary="list game ads", description="Route to list game ads"
     )
-    def get(self, request, *args, **kwargs)->Response:
+    def get(self, request, *args, **kwargs) -> Response:
         return self.list(request, *args, **kwargs)
 
     @extend_schema(
-        tags=["Ads"],
-        summary= "Create game ads",
-        description="Route to create game ads"
+        tags=["Ads"], summary="Create game ads", description="Route to create game ads"
     )
-    def post(self, request, *args, **kwargs)->Response:
+    def post(self, request, *args, **kwargs) -> Response:
         return self.create(request, *args, **kwargs)
 
 
@@ -80,31 +76,23 @@ class AdsUserView(generics.ListAPIView):
         queryset = Ad.objects.filter(user_id=user_id)
 
         return queryset
-    
+
     @extend_schema(
-        tags=["Ads"],
-        summary= "list user ads",
-        description="Route to list user ads"
+        tags=["Ads"], summary="list user ads", description="Route to list user ads"
     )
-    def get(self, request, *args, **kwargs)->Response:
+    def get(self, request, *args, **kwargs) -> Response:
         return self.list(request, *args, **kwargs)
 
 
-  
 class AdsListView(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     serializer_class = AdSerializer
     queryset = Ad.objects.all()
 
-    @extend_schema(
-        tags=["Ads"],
-        summary= "list ads",
-        description="Route to list ads"
-    )
-    def get(self, request, *args, **kwargs)->Response:
+    @extend_schema(tags=["Ads"], summary="list ads", description="Route to list ads")
+    def get(self, request, *args, **kwargs) -> Response:
         return self.list(request, *args, **kwargs)
-
 
 
 class AdsDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -115,26 +103,22 @@ class AdsDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     @extend_schema(
         tags=["Ads"],
-        summary= "list specific ads",
-        description="Route to list specific ads"
+        summary="list specific ads",
+        description="Route to list specific ads",
     )
-    def get(self, request, *args, **kwargs)->Response:
+    def get(self, request, *args, **kwargs) -> Response:
         return self.retrieve(request, *args, **kwargs)
 
-
     @extend_schema(
         tags=["Ads"],
-        summary= "Update specific ads",
-        description="Route to partially update specific ads"
+        summary="Update specific ads",
+        description="Route to partially update specific ads",
     )
-    def patch(self, request, *args, **kwargs)->Response:
+    def patch(self, request, *args, **kwargs) -> Response:
         return self.partial_update(request, *args, **kwargs)
 
-
     @extend_schema(
-        tags=["Ads"],
-        summary= "Delete ads",
-        description="Route to delete specific ads"
+        tags=["Ads"], summary="Delete ads", description="Route to delete specific ads"
     )
-    def delete(self, request, *args, **kwargs)->Response:
+    def delete(self, request, *args, **kwargs) -> Response:
         return self.destroy(request, *args, **kwargs)

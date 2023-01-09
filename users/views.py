@@ -1,15 +1,12 @@
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import generics
-from rest_framework.views import  Response
+from rest_framework.views import Response
 
 from users.models import User
 from users.serializers import UserSerializer
 from users.permissions import IsSuperUserOrPostOnly, IsOwnerOrSuperUser
 
 from drf_spectacular.utils import extend_schema
-
-
-
 
 
 class UserView(generics.ListCreateAPIView):
@@ -20,19 +17,15 @@ class UserView(generics.ListCreateAPIView):
     serializer_class = UserSerializer
 
     @extend_schema(
-        tags=["Users"],
-        summary= "Create user",
-        description="Route to create user"
+        tags=["Users"], summary="Create user", description="Route to create user"
     )
-    def post(self, request, *args, **kwargs)->Response:
+    def post(self, request, *args, **kwargs) -> Response:
         return self.create(request, *args, **kwargs)
 
     @extend_schema(
-        tags=["Users"],
-        summary= "List user",
-        description="Route to list user"   
+        tags=["Users"], summary="List user", description="Route to list user"
     )
-    def get(self, request, *args, **kwargs)->Response:
+    def get(self, request, *args, **kwargs) -> Response:
         return self.list(request, *args, **kwargs)
 
 
@@ -43,31 +36,27 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-
     @extend_schema(
         tags=["Users"],
-        summary= "List specific user",
-        description="Route to list specific user"   
+        summary="List specific user",
+        description="Route to list specific user",
     )
-    def get(self, request, *args, **kwargs)->Response:
+    def get(self, request, *args, **kwargs) -> Response:
         return self.retrieve(request, *args, **kwargs)
 
-
     @extend_schema(
         tags=["Users"],
-        summary= "Update specific user",
-        description="Route to partially update user"   
+        summary="Update specific user",
+        description="Route to partially update user",
     )
-    def patch(self, request, *args, **kwargs)->Response:
+    def patch(self, request, *args, **kwargs) -> Response:
         if request.data["is_active"]:
             request.data.pop("is_active")
 
         return self.partial_update(request, *args, **kwargs)
 
     @extend_schema(
-        tags=["Users"],
-        summary= "Delete user",
-        description="Route to delete user"   
+        tags=["Users"], summary="Delete user", description="Route to delete user"
     )
-    def delete(self, request, *args, **kwargs)->Response:
+    def delete(self, request, *args, **kwargs) -> Response:
         return self.soft_delete(request, *args, **kwargs)

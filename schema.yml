@@ -6,6 +6,8 @@ paths:
   /api/ads/:
     get:
       operationId: api_ads_list
+      description: Route to list ads
+      summary: list ads
       parameters:
       - name: page
         required: false
@@ -14,7 +16,7 @@ paths:
         schema:
           type: integer
       tags:
-      - api
+      - Ads
       security:
       - jwtAuth: []
       responses:
@@ -27,6 +29,8 @@ paths:
   /api/ads/{id}/:
     get:
       operationId: api_ads_retrieve
+      description: Route to list specific ads
+      summary: list specific ads
       parameters:
       - in: path
         name: id
@@ -35,7 +39,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - api
+      - Ads
       security:
       - jwtAuth: []
       responses:
@@ -79,6 +83,8 @@ paths:
           description: ''
     patch:
       operationId: api_ads_partial_update
+      description: Route to partially update specific ads
+      summary: Update specific ads
       parameters:
       - in: path
         name: id
@@ -87,7 +93,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - api
+      - Ads
       requestBody:
         content:
           application/json:
@@ -110,6 +116,8 @@ paths:
           description: ''
     delete:
       operationId: api_ads_destroy
+      description: Route to delete specific ads
+      summary: Delete ads
       parameters:
       - in: path
         name: id
@@ -118,7 +126,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - api
+      - Ads
       security:
       - jwtAuth: []
       responses:
@@ -127,6 +135,8 @@ paths:
   /api/games/:
     get:
       operationId: api_games_list
+      description: Route to list games
+      summary: list games
       parameters:
       - name: page
         required: false
@@ -135,7 +145,7 @@ paths:
         schema:
           type: integer
       tags:
-      - api
+      - Games
       security:
       - jwtAuth: []
       responses:
@@ -147,8 +157,10 @@ paths:
           description: ''
     post:
       operationId: api_games_create
+      description: Route to create game
+      summary: Create game
       tags:
-      - api
+      - Games
       requestBody:
         content:
           application/json:
@@ -173,6 +185,8 @@ paths:
   /api/games-suggestions/:
     get:
       operationId: api_games_suggestions_list
+      description: Route to list game suggestions
+      summary: list game suggestions
       parameters:
       - name: page
         required: false
@@ -181,7 +195,7 @@ paths:
         schema:
           type: integer
       tags:
-      - api
+      - GameSuggestion
       security:
       - jwtAuth: []
       responses:
@@ -193,8 +207,10 @@ paths:
           description: ''
     post:
       operationId: api_games_suggestions_create
+      description: Route to create game suggestion
+      summary: Create game suggestion
       tags:
-      - api
+      - GameSuggestion
       requestBody:
         content:
           application/json:
@@ -219,6 +235,8 @@ paths:
   /api/games-suggestions/{id}/:
     get:
       operationId: api_games_suggestions_retrieve
+      description: Route to List specific game suggestion
+      summary: List specific game suggestion
       parameters:
       - in: path
         name: id
@@ -227,7 +245,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - api
+      - GameSuggestion
       security:
       - jwtAuth: []
       responses:
@@ -239,6 +257,8 @@ paths:
           description: ''
     delete:
       operationId: api_games_suggestions_destroy
+      description: Route to delete game suggestion
+      summary: Delete game suggestion
       parameters:
       - in: path
         name: id
@@ -247,7 +267,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - api
+      - GameSuggestion
       security:
       - jwtAuth: []
       responses:
@@ -256,6 +276,8 @@ paths:
   /api/games/{id}/:
     get:
       operationId: api_games_retrieve
+      description: Route to list specific game
+      summary: List specific game
       parameters:
       - in: path
         name: id
@@ -264,7 +286,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - api
+      - Games
       security:
       - jwtAuth: []
       responses:
@@ -308,6 +330,8 @@ paths:
           description: ''
     patch:
       operationId: api_games_partial_update
+      description: Route to update specific game
+      summary: Update specific game
       parameters:
       - in: path
         name: id
@@ -316,7 +340,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - api
+      - Games
       requestBody:
         content:
           application/json:
@@ -339,6 +363,8 @@ paths:
           description: ''
     delete:
       operationId: api_games_destroy
+      description: Route to delete specific game
+      summary: Delete game
       parameters:
       - in: path
         name: id
@@ -347,7 +373,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - api
+      - Games
       security:
       - jwtAuth: []
       responses:
@@ -356,6 +382,8 @@ paths:
   /api/games/{id}/ads/:
     get:
       operationId: api_games_ads_list
+      description: Route to list game ads
+      summary: list game ads
       parameters:
       - in: path
         name: id
@@ -370,7 +398,7 @@ paths:
         schema:
           type: integer
       tags:
-      - api
+      - Ads
       security:
       - jwtAuth: []
       responses:
@@ -382,6 +410,8 @@ paths:
           description: ''
     post:
       operationId: api_games_ads_create
+      description: Route to create game ads
+      summary: Create game ads
       parameters:
       - in: path
         name: id
@@ -390,7 +420,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - api
+      - Ads
       requestBody:
         content:
           application/json:
@@ -415,6 +445,8 @@ paths:
   /api/genres/:
     get:
       operationId: api_genres_list
+      description: Route to list game genre
+      summary: list game genre
       parameters:
       - name: page
         required: false
@@ -423,7 +455,7 @@ paths:
         schema:
           type: integer
       tags:
-      - api
+      - Genre
       security:
       - jwtAuth: []
       responses:
@@ -435,8 +467,10 @@ paths:
           description: ''
     post:
       operationId: api_genres_create
+      description: Route to create game genre
+      summary: Create game genre
       tags:
-      - api
+      - Genre
       requestBody:
         content:
           application/json:
@@ -461,6 +495,8 @@ paths:
   /api/genres/{id}/:
     get:
       operationId: api_genres_retrieve
+      description: Route to list specific game genre
+      summary: list specific game genre
       parameters:
       - in: path
         name: id
@@ -469,7 +505,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - api
+      - Genre
       security:
       - jwtAuth: []
       responses:
@@ -513,6 +549,8 @@ paths:
           description: ''
     patch:
       operationId: api_genres_partial_update
+      description: Route to update specific game genre
+      summary: Update game genre
       parameters:
       - in: path
         name: id
@@ -521,7 +559,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - api
+      - Genre
       requestBody:
         content:
           application/json:
@@ -544,6 +582,8 @@ paths:
           description: ''
     delete:
       operationId: api_genres_destroy
+      description: Route to delete game genre
+      summary: Delete game genre
       parameters:
       - in: path
         name: id
@@ -552,7 +592,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - api
+      - Genre
       security:
       - jwtAuth: []
       responses:
@@ -561,6 +601,8 @@ paths:
   /api/users/:
     get:
       operationId: api_users_list
+      description: Route to list user
+      summary: List user
       parameters:
       - name: page
         required: false
@@ -569,7 +611,7 @@ paths:
         schema:
           type: integer
       tags:
-      - api
+      - Users
       security:
       - jwtAuth: []
       responses:
@@ -581,8 +623,10 @@ paths:
           description: ''
     post:
       operationId: api_users_create
+      description: Route to create user
+      summary: Create user
       tags:
-      - api
+      - Users
       requestBody:
         content:
           application/json:
@@ -607,6 +651,8 @@ paths:
   /api/users/{id}/:
     get:
       operationId: api_users_retrieve
+      description: Route to list specific user
+      summary: List specific user
       parameters:
       - in: path
         name: id
@@ -615,7 +661,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - api
+      - Users
       security:
       - jwtAuth: []
       responses:
@@ -659,6 +705,8 @@ paths:
           description: ''
     patch:
       operationId: api_users_partial_update
+      description: Route to partially update user
+      summary: Update specific user
       parameters:
       - in: path
         name: id
@@ -667,7 +715,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - api
+      - Users
       requestBody:
         content:
           application/json:
@@ -690,6 +738,8 @@ paths:
           description: ''
     delete:
       operationId: api_users_destroy
+      description: Route to delete user
+      summary: Delete user
       parameters:
       - in: path
         name: id
@@ -698,7 +748,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - api
+      - Users
       security:
       - jwtAuth: []
       responses:
@@ -707,6 +757,8 @@ paths:
   /api/users/{id}/ads/:
     get:
       operationId: api_users_ads_list
+      description: Route to list user ads
+      summary: list user ads
       parameters:
       - in: path
         name: id
@@ -721,7 +773,7 @@ paths:
         schema:
           type: integer
       tags:
-      - api
+      - Ads
       security:
       - jwtAuth: []
       responses:
@@ -761,6 +813,8 @@ paths:
   /api/week_days/:
     get:
       operationId: api_week_days_list
+      description: Route to list days os the week
+      summary: list week day
       parameters:
       - name: page
         required: false
@@ -769,7 +823,7 @@ paths:
         schema:
           type: integer
       tags:
-      - api
+      - WeekDay
       security:
       - jwtAuth: []
       responses:
