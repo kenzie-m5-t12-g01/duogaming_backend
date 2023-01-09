@@ -1,12 +1,14 @@
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework import generics
+from rest_framework.views import  Response
 
 from games_suggestions.models import GameSuggestion
 from games_suggestions.serializers import GameSuggestionSerializer
 from users.permissions import IsSuperUserOrPostOnly
 
 from drf_spectacular.utils import extend_schema
+
 
 
 class GameSuggestionView(generics.ListCreateAPIView):
@@ -25,7 +27,7 @@ class GameSuggestionView(generics.ListCreateAPIView):
         summary= "list game suggestions",
         description="Route to list game suggestions"
     )
-    def get(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs)->Response:
         return self.list(request, *args, **kwargs)
     
     @extend_schema(
@@ -33,7 +35,7 @@ class GameSuggestionView(generics.ListCreateAPIView):
         summary= "Create game suggestion",
         description="Route to create game suggestion"
     )
-    def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs)->Response:
         return self.create(request, *args, **kwargs)
     
 
@@ -49,7 +51,7 @@ class GameSuggestionDetailView(generics.RetrieveDestroyAPIView):
         summary= "List specific game suggestion",
         description="Route to List specific game suggestion"
     )
-    def get(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs)->Response:
         return self.retrieve(request, *args, **kwargs)
 
 
@@ -58,5 +60,5 @@ class GameSuggestionDetailView(generics.RetrieveDestroyAPIView):
         summary= "Delete game suggestion",
         description="Route to delete game suggestion"
     )
-    def delete(self, request, *args, **kwargs):
+    def delete(self, request, *args, **kwargs)->Response:
         return self.destroy(request, *args, **kwargs)

@@ -1,5 +1,5 @@
 from rest_framework import generics, serializers
-from rest_framework.views import Response, status
+from rest_framework.views import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
@@ -56,7 +56,7 @@ class AdsGameView(generics.ListCreateAPIView):
         summary= "list game ads",
         description="Route to list game ads"
     )
-    def get(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs)->Response:
         return self.list(request, *args, **kwargs)
 
     @extend_schema(
@@ -64,7 +64,7 @@ class AdsGameView(generics.ListCreateAPIView):
         summary= "Create game ads",
         description="Route to create game ads"
     )
-    def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs)->Response:
         return self.create(request, *args, **kwargs)
 
 
@@ -86,7 +86,7 @@ class AdsUserView(generics.ListAPIView):
         summary= "list user ads",
         description="Route to list user ads"
     )
-    def get(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs)->Response:
         return self.list(request, *args, **kwargs)
 
 
@@ -102,7 +102,7 @@ class AdsListView(generics.ListAPIView):
         summary= "list ads",
         description="Route to list ads"
     )
-    def get(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs)->Response:
         return self.list(request, *args, **kwargs)
 
 
@@ -118,25 +118,16 @@ class AdsDetailView(generics.RetrieveUpdateDestroyAPIView):
         summary= "list specific ads",
         description="Route to list specific ads"
     )
-    def get(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs)->Response:
         return self.retrieve(request, *args, **kwargs)
 
 
     @extend_schema(
         tags=["Ads"],
         summary= "Update specific ads",
-        description="Route to update specific ads"
-    )
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-
-    @extend_schema(
-        tags=["Ads"],
-        summary= "Partial update specific ads",
         description="Route to partially update specific ads"
     )
-    def patch(self, request, *args, **kwargs):
+    def patch(self, request, *args, **kwargs)->Response:
         return self.partial_update(request, *args, **kwargs)
 
 
@@ -145,5 +136,5 @@ class AdsDetailView(generics.RetrieveUpdateDestroyAPIView):
         summary= "Delete ads",
         description="Route to delete specific ads"
     )
-    def delete(self, request, *args, **kwargs):
+    def delete(self, request, *args, **kwargs)->Response:
         return self.destroy(request, *args, **kwargs)

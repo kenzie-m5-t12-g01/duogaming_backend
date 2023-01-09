@@ -1,11 +1,15 @@
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from games.models import Game
-from games.serializers import GameSerializer
-from games.permissions import IsAdminOrReadOnly
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.views import  Response
+
+from games.models import Game
+from games.serializers import GameSerializer
+from games.permissions import IsAdminOrReadOnly
+
 from drf_spectacular.utils import extend_schema
+
 
 
 class GameView(ListCreateAPIView, PageNumberPagination):
@@ -29,7 +33,7 @@ class GameView(ListCreateAPIView, PageNumberPagination):
         summary= "list games",
         description="Route to list games"
     )
-    def get(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs)->Response:
         return self.list(request, *args, **kwargs)
 
 
@@ -38,7 +42,7 @@ class GameView(ListCreateAPIView, PageNumberPagination):
         summary= "Create game",
         description="Route to create game"
     )
-    def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs)->Response:
         return self.create(request, *args, **kwargs)
 
 class GameDetailView(RetrieveUpdateDestroyAPIView):
@@ -53,25 +57,16 @@ class GameDetailView(RetrieveUpdateDestroyAPIView):
         summary= "List specific game",
         description="Route to list specific game"
     )
-    def get(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs)->Response:
         return self.retrieve(request, *args, **kwargs)
-    
+
 
     @extend_schema(
         tags=["Games"],
-        summary= "Update game",
+        summary= "Update specific game",
         description="Route to update specific game"
     )
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-
-    @extend_schema(
-        tags=["Games"],
-        summary= "Partial update specific game",
-        description="Route to Partial update specific game"
-    )
-    def patch(self, request, *args, **kwargs):
+    def patch(self, request, *args, **kwargs)->Response:
         return self.partial_update(request, *args, **kwargs)
     
 
@@ -80,5 +75,5 @@ class GameDetailView(RetrieveUpdateDestroyAPIView):
         summary= "Delete game",
         description="Route to delete specific game"
     )
-    def delete(self, request, *args, **kwargs):
+    def delete(self, request, *args, **kwargs)->Response:
         return self.destroy(request, *args, **kwargs)
