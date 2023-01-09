@@ -53,11 +53,12 @@ class AdSerializer(serializers.ModelSerializer):
             for day in week_days:
                 day_obj, _ = WeekDay.objects.get_or_create(**day)
                 week_days_list.append(day_obj)
+                
+            instance.week_days.set(week_days_list)
 
         for key, value in validated_data.items():
             setattr(instance, key, value)
 
-        instance.week_days.set(week_days_list)
         instance.save()
 
         return instance
