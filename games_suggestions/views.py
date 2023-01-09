@@ -6,6 +6,8 @@ from games_suggestions.models import GameSuggestion
 from games_suggestions.serializers import GameSuggestionSerializer
 from users.permissions import IsSuperUserOrPostOnly
 
+from drf_spectacular.utils import extend_schema
+
 
 class GameSuggestionView(generics.ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
@@ -16,7 +18,24 @@ class GameSuggestionView(generics.ListCreateAPIView):
     
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
+    
 
+    @extend_schema(
+        tags=["GameSuggestion"],
+        summary= "list game suggestions",
+        description="Route to list game suggestions"
+    )
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+    
+    @extend_schema(
+        tags=["GameSuggestion"],
+        summary= "Create game suggestion",
+        description="Route to create game suggestion"
+    )
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+    
 
 class GameSuggestionDetailView(generics.RetrieveDestroyAPIView):
     authentication_classes = [JWTAuthentication]
@@ -24,3 +43,20 @@ class GameSuggestionDetailView(generics.RetrieveDestroyAPIView):
 
     queryset = GameSuggestion.objects.all()
     serializer_class = GameSuggestionSerializer
+    
+    @extend_schema(
+        tags=["GameSuggestion"],
+        summary= "List specific game suggestion",
+        description="Route to List specific game suggestion"
+    )
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+
+    @extend_schema(
+        tags=["GameSuggestion"],
+        summary= "Delete game suggestion",
+        description="Route to delete game suggestion"
+    )
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
