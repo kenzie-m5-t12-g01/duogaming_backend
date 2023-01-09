@@ -5,6 +5,7 @@ from games.permissions import IsAdminOrReadOnly
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
+from drf_spectacular.utils import extend_schema
 
 
 class GameView(ListCreateAPIView, PageNumberPagination):
@@ -22,7 +23,23 @@ class GameView(ListCreateAPIView, PageNumberPagination):
             return queryset
 
         return super().get_queryset()
+    
+    @extend_schema(
+        tags=["Games"],
+        summary= "list games",
+        description="Route to list games"
+    )
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
 
+
+    @extend_schema(
+        tags=["Games"],
+        summary= "Create game",
+        description="Route to create game"
+    )
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
 class GameDetailView(RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
@@ -30,3 +47,38 @@ class GameDetailView(RetrieveUpdateDestroyAPIView):
     
     queryset = Game.objects.all()
     serializer_class = GameSerializer
+
+    @extend_schema(
+        tags=["Games"],
+        summary= "List specific game",
+        description="Route to list specific game"
+    )
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+    
+
+    @extend_schema(
+        tags=["Games"],
+        summary= "Update game",
+        description="Route to update specific game"
+    )
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+
+    @extend_schema(
+        tags=["Games"],
+        summary= "Partial update specific game",
+        description="Route to Partial update specific game"
+    )
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+    
+
+    @extend_schema(
+        tags=["Games"],
+        summary= "Delete game",
+        description="Route to delete specific game"
+    )
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
