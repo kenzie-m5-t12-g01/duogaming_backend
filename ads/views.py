@@ -41,7 +41,7 @@ class AdsGameView(generics.ListCreateAPIView):
 
         elif nickname_already_exists:
             raise serializers.ValidationError(
-                "There ia already an ad with the same nickname for this game."
+                "There is already an ad with the same nickname for this game."
             )
 
         return serializer.save(
