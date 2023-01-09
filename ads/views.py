@@ -1,12 +1,17 @@
-from rest_framework import generics
-from rest_framework_simplejwt.authentication import JWTAuthentication
-from ads.serializers import AdSerializer
-from ads.models import Ad
+from rest_framework import generics, serializers
+from rest_framework.views import Response, status
 from rest_framework.permissions import IsAuthenticated
-from ads.permissions import IsOwnerOrSuperUser
+from rest_framework_simplejwt.authentication import JWTAuthentication
+
 from django.shortcuts import get_object_or_404
+
 from games.models import Game
 from users.models import User
+
+from ads.models import Ad
+from ads.serializers import AdSerializer
+from ads.permissions import IsOwnerOrSuperUser
+
 
 class AdsGameView(generics.ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
@@ -23,14 +28,20 @@ class AdsGameView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         game_id = self.kwargs["pk"]
+        user_id = self.request.user.id
+
         game_obj = get_object_or_404(Game, id=game_id)
+        ad_already_exists = Ad.objects.filter(game_id=game_id, user_id=user_id)
 
-        self.check_object_permissions(self.request, game_obj)
+        if ad_already_exists:
+            raise serializers.ValidationError("You already have an ad for this game.")
 
-        return serializer.save(
-            user=self.request.user,
-            game=game_obj,
-        )
+        else:
+            return serializer.save(
+                user=self.request.user,
+                game=game_obj,
+            )
+
 
 class AdsUserView(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
@@ -45,15 +56,16 @@ class AdsUserView(generics.ListAPIView):
 
         return queryset
 
+
 class AdsListView(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     serializer_class = AdSerializer
     queryset = Ad.objects.all()
 
+
 class AdsDetailView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated, IsOwnerOrSuperUser]
     serializer_class = AdSerializer
     queryset = Ad.objects.all()
-        
