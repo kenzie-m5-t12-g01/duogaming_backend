@@ -18,3 +18,4 @@ class IsOwnerOrSuperUser(permissions.BasePermission):
             return False
 
         return False
+
