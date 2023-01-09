@@ -1,1 +1,2 @@
-# duogaming_backend
+# Documentation
+- /api/doc/
