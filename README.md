@@ -1,2 +1,2 @@
 # Documentation
-- /api/doc/
+/api/doc/
