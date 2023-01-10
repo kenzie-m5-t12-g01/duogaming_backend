@@ -7,6 +7,7 @@ from rest_framework.views import Response
 from games.models import Game
 from games.serializers import GameSerializer
 from games.permissions import IsAdminOrReadOnly
+from games.pagination import GamesPagination
 
 from drf_spectacular.utils import extend_schema
 
@@ -17,6 +18,7 @@ class GameView(ListCreateAPIView, PageNumberPagination):
 
     queryset = Game.objects.all()
     serializer_class = GameSerializer
+    pagination_class = GamesPagination
 
     def get_queryset(self):
         route_parameter = self.request.GET.get("genre")
