@@ -172,6 +172,7 @@ class UserGetTests(APITestCase):
             "created_at",
             "updated_at",
             "is_superuser",
+            "ads",
         }
         returned_keys = set(response.json().keys())
         msg = (
