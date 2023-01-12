@@ -2,6 +2,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import generics
 from rest_framework.views import Response
 
+from utils import mixins
 from users.models import User
 from users.serializers import UserSerializer
 from users.permissions import IsSuperUserOrPostOnly, IsOwnerOrSuperUser
@@ -29,7 +30,7 @@ class UserView(generics.ListCreateAPIView):
         return self.list(request, *args, **kwargs)
 
 
-class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
+class UserDetailView(mixins.SoftDeleteMixin, generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsOwnerOrSuperUser]
 
