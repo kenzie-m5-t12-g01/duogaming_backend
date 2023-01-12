@@ -30,7 +30,10 @@ class UserView(generics.ListCreateAPIView):
         return self.list(request, *args, **kwargs)
 
 
-class UserDetailView(mixins.SoftDeleteMixin, generics.RetrieveUpdateDestroyAPIView):
+class UserDetailView(
+    mixins.SoftDeleteMixin,
+    generics.RetrieveUpdateDestroyAPIView,
+):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsOwnerOrSuperUser]
 
@@ -51,9 +54,7 @@ class UserDetailView(mixins.SoftDeleteMixin, generics.RetrieveUpdateDestroyAPIVi
         description="Route to partially update user",
     )
     def patch(self, request, *args, **kwargs) -> Response:
-        if request.data["is_active"]:
-            request.data.pop("is_active")
-
+        request.data.pop("is_active", None)
         return self.partial_update(request, *args, **kwargs)
 
     @extend_schema(
